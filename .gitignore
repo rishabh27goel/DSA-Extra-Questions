@@ -6,3 +6,5 @@
 # Or directories
 !*/
 !.gitignore
+# Ignore exe files
+*.exe
