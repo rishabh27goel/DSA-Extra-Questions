@@ -3,7 +3,7 @@
 using namespace std;
 
 // Method 1 : Recursion Method
-// Time Complexity : O(2 ^ (n * m))  Space Complexity : O(n * m)
+// Time Complexity : O(2 ^ (min(n, m)))  Space Complexity : O(min(n, m))
 // int findLongestSubsequence(int n, int m, string &s1, string &s2, int i, int j){
 
 //     // Base Case
