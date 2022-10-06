@@ -208,6 +208,10 @@ int longestPalindromicSubsequence(string &str){
     return prev[n-1];
 }
 
+// Method 5 : 
+// Use Longest Common Subsequence on input string and its reverse string
+
+
 int main()
 {
     cout << "Enter string : ";
