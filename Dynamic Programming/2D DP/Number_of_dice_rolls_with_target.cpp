@@ -131,7 +131,7 @@ using namespace std;
 // }
 
 // Method 4 : Space Optimisation 
-// Time Complexity : O(k * n * target)  Space Complexity : O(n * target)
+// Time Complexity : O(k * n * target)  Space Complexity : O(2 * target)
 int diceRolls(int n, int k, int target){
 
     // If the target is not reachable
