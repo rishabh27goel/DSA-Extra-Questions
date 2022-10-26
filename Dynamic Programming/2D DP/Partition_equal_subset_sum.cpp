@@ -166,11 +166,13 @@ bool equalSubsetSum(vector<int> &nums){
     int target = sum >> 1;
     vector<bool> dp(target+1, false);
 
+    // Base Case
+    dp[0] = true;
 
     // Step 2 : Tabulation
     for(int ind=n-1; ind>=0; ind--){
 
-        for(int j=target; j>=0; j--){
+        for(int j=target; j>=1; j--){
 
             if(j == 0){
 
