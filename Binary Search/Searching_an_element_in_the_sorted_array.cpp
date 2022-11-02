@@ -2,7 +2,8 @@
 #include <vector>
 using namespace std;
 
-// Method : Binary Search
+// Method : Binary Search [Array should be sorted]
+// Time Complexity : O(log(n))  Space Complexity : O(1)
 bool searchElement(vector<int> &arr, int target){
 
     int n = arr.size();
