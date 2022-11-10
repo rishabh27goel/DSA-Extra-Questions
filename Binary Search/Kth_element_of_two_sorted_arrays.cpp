@@ -4,13 +4,15 @@ using namespace std;
 
 // Method 1 : Brute Force
 // Time Complexity : O((n1 + n2) * log(n1 + n2))  Space Complexity : O(n1 + n2)
-// double medianTwoSortedArray(vector<int> &nums1, vector<int> &nums2){
+// int kthElement(vector<int> &nums1, vector<int> &nums2, int k){
 
 //     int n1 = nums1.size();
 //     int n2 = nums2.size();
 
-//     int n = n1 + n2;
+//     if(n1 + n2 < k)
+//         return INT_MIN;
 
+//     // Combining two arrays
 //     vector<int> combined;
 
 //     for(int i=0; i<n1; i++){
@@ -23,33 +25,26 @@ using namespace std;
 //         combined.push_back(nums2[i]);
 //     }
 
-
 //     // Sort the combined array
 //     sort(combined.begin(), combined.end());
 
-//     // Even
-//     if(n % 2 == 0){
 
-//         return (combined[n/2] + combined[(n-1)/2]) / 2.0;
-//     }
-//     // Odd
-//     else{
-
-//         return combined[n/2];
-//     }
+//     return combined[k-1];
 // }
 
-// Method 2 : Merge Two Sorted Array
+// Method 2 : Merge two sorted array
 // Time Complexity : O(n1 + n2)  Space Complexity : O(n1 + n2)
-// double medianTwoSortedArray(vector<int> &nums1, vector<int> &nums2){
+// int kthElement(vector<int> &nums1, vector<int> &nums2, int k){
 
 //     int n1 = nums1.size();
 //     int n2 = nums2.size();
 
-//     int n = n1 + n2;
+//     if(n1 + n2 < k)
+//         return INT_MIN;
 
-//     // Merge Array
+//     // Combining two arrays
 //     vector<int> combined;
+    
 
 //     int i = 0;
 //     int j = 0;
@@ -88,72 +83,54 @@ using namespace std;
 //         j++;
 //     }
 
-
-//     // Even
-//     if(n % 2 == 0){
-
-//         return (combined[n/2] + combined[(n-1)/2]) / 2.0;
-//     }
-//     // Odd
-//     else{
-
-//         return combined[n/2];
-//     }
+//     return combined[k-1];
 // }
 
-// Method 3 : Merge Two Sorted Array [With Counter]
+// Method 3 : Merge two sorted array [With Counter]
 // Time Complexity : O(n1 + n2)  Space Complexity : O(1)
-// void updateMedian(int n, int counter, int &first, int &second, int value){
-
-//     if((n-1) / 2 == counter)
-//         first = value;
-        
-//     if(n / 2 == counter)
-//         second = value;
-// }
-
-// double medianTwoSortedArray(vector<int> &nums1, vector<int> &nums2){
+// int kthElement(vector<int> &nums1, vector<int> &nums2, int k){
 
 //     int n1 = nums1.size();
 //     int n2 = nums2.size();
 
-//     int n = n1 + n2;
+//     if(n1 + n2 < k)
+//         return INT_MIN;
 
-//     int first = -1;
-//     int second = -1;
-
-//     // Merge Array
-
+//     // Combining two arrays
 //     int counter = 0;
+//     int element = -1;
+
 //     int i = 0;
 //     int j = 0;
-
-//     cout << n << " ";
 
 //     while(i < n1 && j < n2){
 
 //         if(nums1[i] == nums2[j]){
 
-//             updateMedian(n, counter, first, second, nums1[i]);
+//             if(counter == k-1)     
+//                 element = nums1[i];
 
 //             counter++;
 //             i++;
 
-//             updateMedian(n, counter, first, second, nums2[j]);
+//             if(counter == k-1)     
+//                 element = nums2[j];
 
 //             counter++;
 //             j++;
 //         }
 //         else if(nums1[i] < nums2[j]){
 
-//             updateMedian(n, counter, first, second, nums1[i]);
-
+//             if(counter == k-1)     
+//                 element = nums1[i];
+            
 //             counter++;
 //             i++;
 //         }
 //         else{
 
-//             updateMedian(n, counter, first, second, nums2[j]);
+//             if(counter == k-1)     
+//                 element = nums2[j];
 
 //             counter++;
 //             j++;
@@ -162,7 +139,8 @@ using namespace std;
 
 //     while(i < n1){
 
-//         updateMedian(n, counter, first, second, nums1[i]);
+//         if(counter == k-1)     
+//                 element = nums1[i];
 
 //         counter++;
 //         i++;
@@ -170,65 +148,55 @@ using namespace std;
 
 //     while(j < n2){
 
-//         updateMedian(n, counter, first, second, nums2[j]);
+//         if(counter == k-1)     
+//                 element = nums2[j];
 
 //         counter++;
 //         j++;
 //     }
 
-//     // Even
-//     if(n % 2 == 0){
-
-//         return (first + second) / 2.0;
-//     }
-//     // Odd
-//     else{
-
-//         return first / 1.0;
-//     }
+//     return element;
 // }
 
 // Method 4 : Using Binary Search
 // Time Complexity : O(log(n1 + n2))  Space Complexity : O(1)
-double medianTwoSortedArray(vector<int> &nums1, vector<int> &nums2){
+int kthElement(vector<int> &nums1, vector<int> &nums2, int k){
 
     int n1 = nums1.size();
     int n2 = nums2.size();
 
-    if(n1 > n2)
-        return medianTwoSortedArray(nums2, nums1);
+    int end = k;
 
+    if(n1 < k)
+        end = n1;
 
-    // Apply Binary Search on different splits possible
-    // We will always try to take nums1 as smaller size array 
+    
     int i = 0;
-    int j = n1;
-
-    int total = (n1 + n2 + 1) / 2;
+    int j = end;
 
     while(i <= j){
 
         int mid = i + (j - i) / 2;
 
         int split1 = mid;
-        int split2 = total - split1;
+        int split2 = k - split1;
+
+        // Middle is not possible
+        if(split2 > n2){
+
+            i = mid + 1;
+            continue;
+        }
 
         int left1 = (split1 == 0 ? INT_MIN : nums1[split1-1]);
         int left2 = (split2 == 0 ? INT_MIN : nums2[split2-1]);
         int right1 = (split1 == n1 ? INT_MAX : nums1[split1]);
         int right2 = (split2 == n2 ? INT_MAX : nums2[split2]);
 
-        // If split is possible
+        // Split is Possible
         if(left1 <= right2 && left2 <= right1){
 
-            if((n1 % n2) % 2 == 0){
-
-                return (max(left1, left2) + min(right1, right2)) / 2.0;
-            }
-            else{
-
-                return max(left1, left2) / 1.0;
-            }
+            return max(left1, left2);
         }
         else if(left1 > right2){
 
@@ -240,7 +208,7 @@ double medianTwoSortedArray(vector<int> &nums1, vector<int> &nums2){
         }
     }
 
-    return 0.0;
+    return 0;
 }
 
 int main()
@@ -265,10 +233,14 @@ int main()
         cin >> arr2[i];
     }
 
-    // Median of Two Sorted Array
-    double median = medianTwoSortedArray(arr1, arr2);
+    cout << "Enter k : ";
+    int k;
+    cin >> k;
 
-    cout << "Median of two array : " << median;
+    // Kth element of two sorted arrays
+    int element = kthElement(arr1, arr2, k);
+
+    cout << "Kth Element : " << element;
 
 
     cout << endl;
