@@ -23,7 +23,7 @@ pair<int, int> findMinMax(vector<int> &arr){
     int n = arr.size();
 
     pair<int, int> minmax = make_pair(INT_MAX, INT_MIN);
-
+ 
     for(int i=0; i<n; i++){
 
         if(minmax.first > arr[i]){
