@@ -56,44 +56,52 @@ using namespace std;
 //     return make_pair(maxHeap.top(), minHeap.top());
 // }
 
-// Method 2 : Using Priority Queue [Space Reduced]
-// Time Complexity : O(n * log(n))  Space Complexity : O(k)
+// Method 3 : Using Priority Queue [Space Reduced]
+// Time Complexity : O(n * log(k))  Space Complexity : O(k)
 pair<int, int> findKthMaxiMini(vector<int> &arr, int k){
 
     int n = arr.size();
 
     // Maximum Element
-    priority_queue<int> maxHeap;
-
-    for(int i=0; i<n; i++){
-
-        maxHeap.push(arr[i]);
-    }
-
-    // Minimum Element
     priority_queue<int, vector<int>, greater<int> > minHeap;
 
     for(int i=0; i<n; i++){
 
-        minHeap.push(arr[i]);
+        if(minHeap.size() < k){
+
+            minHeap.push(arr[i]);
+        }
+        else{
+
+            if(minHeap.top() < arr[i]){
+
+                minHeap.pop();
+                minHeap.push(arr[i]);
+            }
+        }
     }
 
 
-    int size = k;
+    // Minimum Element
+    priority_queue<int> maxHeap;
 
-    while(--size){
+    for(int i=0; i<n; i++){
 
-        maxHeap.pop();
+        if(maxHeap.size() < k){
+
+            maxHeap.push(arr[i]);
+        }
+        else{
+
+            if(maxHeap.top() > arr[i]){
+
+                maxHeap.pop();
+                maxHeap.push(arr[i]);
+            }
+        }
     }
 
-    size = k;
-
-    while(--size){
-
-        minHeap.pop();
-    }
-
-    return make_pair(maxHeap.top(), minHeap.top());
+    return make_pair(minHeap.top(), maxHeap.top());
 }
 
 int main()
