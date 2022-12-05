@@ -99,7 +99,7 @@ int main()
     }
 
     // Create Segment Tree
-    vector<ll> tree(n * 2, 0);
+    vector<ll> tree(n * 4, 0);
 
     createSegmentTree(1, arr, 0, n-1, tree);
 

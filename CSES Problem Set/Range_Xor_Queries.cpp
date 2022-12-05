@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <climits>
 using namespace std;
 
 #define ll long long int
@@ -21,29 +20,28 @@ void createSegmentTree(ll node, vector<ll> &arr, ll start, ll end, vector<ll> &t
         // Right Tree
         createSegmentTree(2 * node + 1, arr, mid+1, end, tree);
 
-        // Store values of left and right tree
-        tree[node] = min(tree[2 * node], tree[2 * node + 1]);
+
+        tree[node] = (tree[2 * node] ^ tree[2 * node + 1]);
     }
 }
 
 ll query(ll node, vector<ll> &tree, ll start, ll end, ll l, ll r){
 
     // Base Case
-    if(end < l || start > r)
-        return INT_MAX;
+    if(r < start || l > end)
+        return 0;
 
-    // If node is in range
     if(l <= start && end <= r)
         return tree[node];
 
-
+    
     ll mid = start + (end - start) / 2;
 
     ll part1 = query(2 * node, tree, start, mid, l, r);
     ll part2 = query(2 * node + 1, tree, mid+1, end, l, r);
-    
 
-    return min(part1, part2);
+
+    return (part1 ^ part2);
 }
 
 int main()
@@ -58,14 +56,14 @@ int main()
         cin >> arr[i];
     }
 
-    // Create Segment Tree
-    vector<ll> tree(n * 4, INT_MAX);
+    // Segment Tree
+    vector<ll> tree(4 * n);
 
     createSegmentTree(1, arr, 0, n-1, tree);
 
 
-    // Queries
-    for(ll i=0; i<q; i++){
+    // Quries 
+    for(ll j=0; j<q; j++){
 
         ll l, r;
         cin >> l >> r;
@@ -74,7 +72,6 @@ int main()
 
         cout << value << endl;
     }
-
 
     cout << endl;
     return 0;
