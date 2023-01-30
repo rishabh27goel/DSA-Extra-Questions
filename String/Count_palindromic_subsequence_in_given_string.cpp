@@ -1,6 +1,13 @@
 #include <iostream>
 using namespace std;
 
+int countPalindromicSubsequences(string &input){
+
+    int result = 0;
+    
+    return result;
+}
+
 int main()
 {
     cout << "Enter Input String : ";
