@@ -8,7 +8,6 @@ string smallestWindow(string &first, string &second){
     int n1 = first.size();
     int n2 = second.size();
 
-
     int charCount1[26] = {0};
     int charCount2[26] = {0};
 
@@ -16,7 +15,6 @@ string smallestWindow(string &first, string &second){
 
         charCount2[second[i]-'a']++;
     }
-
 
     int start = 0;
     int end = 0;
