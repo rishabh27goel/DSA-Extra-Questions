@@ -20,15 +20,7 @@ using namespace std;
 
 // Method 2 : Binary Search
 // Time Complexity : O(log(n))  Space Complexity : O(1)
-int singleElement(vector<int> &arr){
 
-    int n = arr.size();
-
-    int i = 0;
-    int j = n-1;
-
-    return 0;
-}
 
 int main()
 {
