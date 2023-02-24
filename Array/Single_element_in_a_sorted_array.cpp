@@ -22,7 +22,48 @@ using namespace std;
 // Time Complexity : O(log(n))  Space Complexity : O(1)
 int singleElement(vector<int> &arr){
 
-    return 0;
+    int n = arr.size();
+
+    int i = 0;
+    int j = n-1;
+
+    // As we want to check previous element of mid
+    while(i < j){
+
+        int mid = i + (j - i) / 2;
+
+        // Check previous element
+        if(arr[mid] == arr[mid-1]){
+
+            // If mid is odd
+            if(mid % 2 == 1){
+
+                // Search right half
+                i = mid+1;
+            }
+            else{
+
+                // Search left half
+                j = mid;
+            }
+        }
+        else{
+
+            // If mid is odd
+            if(mid % 2 == 1){
+
+                // Search right half
+                j = mid-1;
+            }
+            else{
+
+                // Search left half
+                i = mid;
+            }
+        }
+    }
+
+    return arr[i];
 }
 
 int main()
