@@ -82,7 +82,19 @@ int majorityElement(vector<int> &arr){
         }
     }
 
-    return candidate;
+    // Algorithm only gives possible candidate
+    c = 0;
+
+    for(int i=0; i<n; i++){
+
+        if(arr[i] == candidate)
+            c++;
+    }
+
+    if(c > n/2)
+        return candidate;
+
+    return -1;
 }
 
 int main()
