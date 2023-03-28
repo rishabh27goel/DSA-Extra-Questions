@@ -1,8 +1,9 @@
 # Ignore Everything
 *
 
-# But not .cpp
+# But not .cpp .java
 !*.cpp
+!*.java
 # Or directories
 !*/
 !.gitignore
