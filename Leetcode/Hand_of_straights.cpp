@@ -9,6 +9,10 @@ bool handOfStraights(vector<int> &arr, int groupSize){
 
     int n = arr.size();
 
+    // Sort the array
+    sort(arr.begin(), arr.end());
+
+    
     unordered_map<int, int> mp;
 
     for(int i=0; i<n; i++){
