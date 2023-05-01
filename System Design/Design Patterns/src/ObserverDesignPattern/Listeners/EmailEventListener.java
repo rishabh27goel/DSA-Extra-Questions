@@ -1,10 +1,19 @@
 package ObserverDesignPattern.Listeners;
 
+import java.io.File;
+
 public class EmailEventListener implements EventListener{
 
-    @Override
-    public void update(String eventType) {
+    private String email;
 
-        System.out.println("Email for event type : " + eventType);
+    public EmailEventListener(String email){
+
+        this.email = email;
+    }
+
+    @Override
+    public void update(String eventType, File file) {
+
+        System.out.println("Email to " + email + " : Someone has performed " + eventType + " operation on file " + file.getName());
     }
 }
