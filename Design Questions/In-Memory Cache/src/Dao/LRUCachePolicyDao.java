@@ -41,13 +41,17 @@ public class LRUCachePolicyDao implements CachePolicyDao {
             Object value = cacheDataStore.get(key);
 
             // If value is not found
-            if (value == null)
+            if (value == null){
+
+                System.out.print("No data present with the key : ");
                 return null;
+            }
 
             // Else update the linked list order
             cacheDataList.remove(key);
             cacheDataList.addFirst(key);
 
+            System.out.print("Data present in the data store : ");
             return value;
         }
         catch (Exception e){
@@ -55,6 +59,7 @@ public class LRUCachePolicyDao implements CachePolicyDao {
             System.out.println("Data Fetch not possible");
         }
 
+        System.out.print("No data present with the key : ");
         return null;
     }
     @Override
@@ -73,40 +78,46 @@ public class LRUCachePolicyDao implements CachePolicyDao {
             cacheDataList.addFirst(key);
             cacheDataStore.put(key, value);
 
+            System.out.println("Data inserted successfully");
             return true;
         }
         catch (Exception e){
 
             System.out.println("Data Insertion not possible");
+            return false;
         }
-
-        return false;
     }
     @Override
     public boolean delete(Object key) {
 
-        if(cacheDataStore.size() == 0)
+        if(cacheDataStore.size() == 0){
+
+            System.out.println("Data store is empty");
             return false;
+        }
 
         try {
 
             Object value = cacheDataStore.get(key);
 
             // No value deleted
-            if(value == null)
+            if(value == null){
+
+                System.out.println("No key found to delete");
                 return false;
+            }
 
             cacheDataList.remove(key);
             cacheDataStore.remove(key);
 
+            System.out.println("Key deleted from data store");
             return true;
         }
         catch (Exception e){
 
             System.out.println("Data Deletion not possible");
+            return false;
         }
-
-        return false;
     }
     @Override
     public boolean clear(){
@@ -116,13 +127,13 @@ public class LRUCachePolicyDao implements CachePolicyDao {
             cacheDataList.clear();
             cacheDataStore.clear();
 
+            System.out.println("Data store reset successful");
             return true;
         }
-        catch (Exception e){
+        catch (Exception e) {
 
             System.out.println("Data Clearing not possible");
+            return false;
         }
-
-        return false;
     }
 }
