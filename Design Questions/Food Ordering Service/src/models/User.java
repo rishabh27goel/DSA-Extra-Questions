@@ -10,12 +10,12 @@ public class User {
     private int userId;
     private String userName;
     private Gender userGender;
-    private long userPhoneNumber;
-    private long userPincode;
+    private Long userPhoneNumber;
+    private Long userPincode;
     private List<Restaurant> userRestaurantList;
     private List<Order> userOrderHistory;
 
-    User(int userId, String userName, Gender userGender, long userPhoneNumber, long userPincode){
+    User(int userId, String userName, Gender userGender, Long userPhoneNumber, Long userPincode){
 
         this.userId = userId;
         this.userName = userName;
@@ -51,7 +51,7 @@ public class User {
         this.userGender = userGender;
     }
 
-    public long getUserPhoneNumber() {
+    public Long getUserPhoneNumber() {
         return userPhoneNumber;
     }
 
@@ -59,7 +59,7 @@ public class User {
         this.userPhoneNumber = userPhoneNumber;
     }
 
-    public long getUserPincode() {
+    public Long getUserPincode() {
         return userPincode;
     }
 
