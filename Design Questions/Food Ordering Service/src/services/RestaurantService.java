@@ -18,10 +18,12 @@ public class RestaurantService {
     // Every service needs a reference for Dao
     private UserDao userDao = UserDao.getInstance();
 
-    public void registerRestaurant(String restaurantName, String restaurantFoodItemName, int restaurantFoodItemPrice, int restaurantInitialQuantity) throws Exception {
+    public void registerRestaurant(String restaurantName, String serviceablePincodes, String restaurantFoodItemName, int restaurantFoodItemPrice, int restaurantInitialQuantity) throws Exception {
 
         if(restaurantName.isEmpty())
             throw new Exception("Restaurant name can not be empty");
+        else if(serviceablePincodes.isEmpty())
+            throw new Exception("Serviceable pincodes can not be empty");
         else if(restaurantFoodItemName.isEmpty())
             throw new Exception("Food item can not be empty");
         else if(restaurantFoodItemPrice <= 0)
@@ -29,7 +31,7 @@ public class RestaurantService {
         else if(restaurantInitialQuantity <= 0)
             throw new Exception("Food initial quantity should be a non-zero positive number");
 
-        userDao.registerRestaurant(restaurantName, restaurantFoodItemName, restaurantFoodItemPrice, restaurantInitialQuantity);
+        userDao.registerRestaurant(restaurantName, serviceablePincodes, restaurantFoodItemName, restaurantFoodItemPrice, restaurantInitialQuantity);
     }
 
     public void updateQuantity(String restaurantName, int quantityAddition) throws Exception {

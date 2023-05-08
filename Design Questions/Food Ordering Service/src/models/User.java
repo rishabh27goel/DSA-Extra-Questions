@@ -15,7 +15,7 @@ public class User {
     private List<Restaurant> userRestaurantList;
     private List<Order> userOrderHistory;
 
-    User(int userId, String userName, Gender userGender, Long userPhoneNumber, Long userPincode){
+    public User(int userId, String userName, Gender userGender, Long userPhoneNumber, Long userPincode){
 
         this.userId = userId;
         this.userName = userName;

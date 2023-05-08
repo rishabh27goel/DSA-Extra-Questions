@@ -6,7 +6,7 @@ public class Review {
     private int reviewRating;
     private String reviewComment;
 
-    Review(int reviewId, int reviewRating, String reviewComment){
+    public Review(int reviewId, int reviewRating, String reviewComment){
 
         this.reviewId = reviewId;
         this.reviewRating = reviewRating;

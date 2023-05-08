@@ -11,21 +11,12 @@ public class Restaurant {
     private int restaurantFoodItemPrice;
     private int restaurantInitialQuantity;
     private float restaurantOverallRating;
-    private List<long> restaurantServiceablePincodes;
+    private List<Long> restaurantServiceablePincodes;
     private List<Review> restaurantReviews;
 
-    Restaurant(int restaurantId, String restaurantName, String restaurantFoodItemName, int restaurantFoodItemPrice, int restaurantInitialQuantity, float restaurantOverallRating){
+    public Restaurant(){
 
-        this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.restaurantFoodItemName = restaurantFoodItemName;
-        this.restaurantFoodItemPrice = restaurantFoodItemPrice;
-        this.restaurantInitialQuantity = restaurantInitialQuantity;
-        this.restaurantOverallRating = restaurantOverallRating;
-        this.restaurantServiceablePincodes = new ArrayList<long>();
-        this.restaurantReviews = new ArrayList<>();
     }
-
 
     public int getRestaurantId() {
         return restaurantId;
@@ -75,11 +66,11 @@ public class Restaurant {
         this.restaurantOverallRating = restaurantOverallRating;
     }
 
-    public List<long> getRestaurantServiceablePincodes() {
+    public List<Long> getRestaurantServiceablePincodes() {
         return restaurantServiceablePincodes;
     }
 
-    public void setRestaurantServiceablePincodes(List<long> restaurantServiceablePincodes) {
+    public void setRestaurantServiceablePincodes(List<Long> restaurantServiceablePincodes) {
         this.restaurantServiceablePincodes = restaurantServiceablePincodes;
     }
 
