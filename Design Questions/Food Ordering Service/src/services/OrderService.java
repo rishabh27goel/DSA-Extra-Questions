@@ -29,11 +29,8 @@ public class OrderService {
         userDao.placeOrder(restaurantName, quantity);
     }
 
-    public void orderHistory(int userId) throws Exception{
+    public void orderHistory() throws Exception{
 
-        if(userId <= 0)
-            throw new Exception("UserId is not valid");
-
-        userDao.orderHistory(userId);
+        userDao.orderHistory();
     }
 }

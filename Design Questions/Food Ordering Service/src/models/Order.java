@@ -8,15 +8,11 @@ public class Order {
     private String itemName;
     private int itemPrice;
     private int itemQuantity;
+    private Long totalCost;
 
-    public Order(int orderId, int userId, int restaurantId, String itemName, int itemPrice, int itemQuantity){
+    public Order(){
 
-        this.orderId = orderId;
-        this.userId = userId;
-        this.restaurantId = restaurantId;
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
-        this.itemQuantity = itemQuantity;
+
     }
 
 
@@ -67,4 +63,8 @@ public class Order {
     public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
+
+    public Long getTotalCost() { return totalCost; }
+
+    public void setTotalCost(Long totalCost) { this.totalCost = totalCost; }
 }

@@ -12,7 +12,7 @@ public class Restaurant {
     private int restaurantInitialQuantity;
     private float restaurantOverallRating;
     private List<Long> restaurantServiceablePincodes;
-    private List<Review> restaurantReviews;
+    private List<Review> restaurantReviews = new ArrayList<>();
 
     public Restaurant(){
 
