@@ -262,6 +262,9 @@ public class UserDao {
         if (loggedInUser == null)
             throw new Exception("No user is currently logged in");
 
+        if (loggedInUser.getUserOrderHistory().isEmpty())
+            throw new Exception("No orders yet for user id " + loggedInUser.getUserId());
+
 
         System.out.println("Order History : ");
 
@@ -272,6 +275,8 @@ public class UserDao {
             System.out.println("Food Item Price : " + order.getItemPrice());
             System.out.println("Total Cost : " + order.getTotalCost());
         }
+
+        System.out.println();
     }
 
     // Other Util
