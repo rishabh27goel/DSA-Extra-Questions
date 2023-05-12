@@ -1,5 +1,7 @@
 package utils;
 
+import constants.IDType;
+
 public class IDGenerator {
 
     private static int orderId = 0;
@@ -7,12 +9,7 @@ public class IDGenerator {
     private static int reviewId = 0;
     private static int userId = 0;
 
-    public static int generateId(String idType){
-
-        final String ORDER = "order";
-        final String RESTAURANT = "restaurant";
-        final String REVIEW = "review";
-        final String USER = "user";
+    public static int generateId(IDType idType){
 
         switch (idType) {
 

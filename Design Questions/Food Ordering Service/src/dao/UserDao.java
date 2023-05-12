@@ -1,6 +1,7 @@
 package dao;
 
 import constants.Gender;
+import constants.IDType;
 import models.Order;
 import models.Restaurant;
 import models.Review;
@@ -40,7 +41,7 @@ public class UserDao {
             throw new Exception("User already exists with phone number " + userPhoneNumber);
 
         // If no user is present -> create a new user
-        User newUser = new User(IDGenerator.generateId("user"), userName, userGender, userPhoneNumber, userPincode);
+        User newUser = new User(IDGenerator.generateId(IDType.USER), userName, userGender, userPhoneNumber, userPincode);
 
         usersInfoMap.put(userPhoneNumber, newUser);
         existedUsersMap.put(newUser.getUserId(), userPhoneNumber);
@@ -94,7 +95,7 @@ public class UserDao {
 
         // Builder Pattern
         Restaurant newRestaurant = new Restaurant();
-        newRestaurant.setRestaurantId(IDGenerator.generateId("restaurant"));
+        newRestaurant.setRestaurantId(IDGenerator.generateId(IDType.RESTAURANT));
         newRestaurant.setRestaurantName(restaurantName);
         newRestaurant.setRestaurantServiceablePincodes(pincodesList);
         newRestaurant.setRestaurantFoodItemName(restaurantFoodItemName);
@@ -140,7 +141,7 @@ public class UserDao {
 
         // If restaurant exists
         Restaurant restaurant = restaurantsInfoMap.get(restaurantName);
-        Review review = new Review(IDGenerator.generateId("review"), rating, comment);
+        Review review = new Review(IDGenerator.generateId(IDType.REVIEW), rating, comment);
 
         // Added review to the review list of restaurant
         restaurant.getRestaurantReviews().add(review);
@@ -235,7 +236,7 @@ public class UserDao {
 
         // Create the order
         Order order = new Order();
-        order.setOrderId(IDGenerator.generateId("order"));
+        order.setOrderId(IDGenerator.generateId(IDType.ORDER));
         order.setUserId(loggedInUser.getUserId());
         order.setRestaurantId(restaurant.getRestaurantId());
         order.setItemName(restaurant.getRestaurantFoodItemName());
