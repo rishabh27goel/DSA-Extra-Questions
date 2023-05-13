@@ -4,6 +4,9 @@
 # But not .cpp .java
 !*.cpp
 !*.java
+!*.pdf
+!*.docx
+
 # Or directories
 !*/
 !.gitignore
