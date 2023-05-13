@@ -8,6 +8,12 @@ public class Match {
     private Integer primaryUser;
     private Integer secondaryUser;
 
+    public Match(Integer matchId, Integer primaryUser, Integer secondaryUser){
+
+        this.matchId = matchId;
+        this.primaryUser = primaryUser;
+        this.secondaryUser = secondaryUser;
+    }
 
     public Integer getMatchId() {
         return matchId;

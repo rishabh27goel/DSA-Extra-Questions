@@ -54,7 +54,7 @@ public class MatchServices {
         userDao.showMatches(userName);
     }
 
-    public void showAllMatches(){
+    public void showAllMatches() throws Exception{
 
         userDao.showAllMatches();
     }

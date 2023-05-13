@@ -14,7 +14,6 @@ public class User {
     private Location userLocation;
     private Integer userAge;
     private Gender userGender;
-    private Boolean isActive;
 
     private Map<Integer, ActionType> userActionTypeMap = new HashMap<Integer, ActionType>();
     private List<Integer> usersWhoLikedYou = new ArrayList<>();
@@ -64,14 +63,6 @@ public class User {
 
     public void setUserGender(Gender userGender) {
         this.userGender = userGender;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 
     public Map<Integer, ActionType> getUserActionTypeMap() {
