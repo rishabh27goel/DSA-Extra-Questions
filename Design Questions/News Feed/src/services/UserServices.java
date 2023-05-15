@@ -2,6 +2,7 @@ package services;
 
 import constants.Gender;
 import dao.UserDao;
+import models.User;
 
 public class UserServices {
 
@@ -42,13 +43,11 @@ public class UserServices {
         userDao.loginUser(userName);
     }
 
-    public void followUser(String primaryUser, String secondaryUser) throws Exception {
+    public void followUser(String userName) throws Exception {
 
-        if(primaryUser.isEmpty() || primaryUser == null)
-            throw new Exception("Primary username can not be empty");
-        else if(secondaryUser.isEmpty() || secondaryUser == null)
-            throw new Exception("Secondary username can not be empty");
+        if(userName.isEmpty() || userName == null)
+            throw new Exception("Username can not be empty");
 
-        userDao.followUser(primaryUser, secondaryUser);
+        userDao.followUser(userName);
     }
 }
