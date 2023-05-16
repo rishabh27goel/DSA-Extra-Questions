@@ -34,6 +34,12 @@ public class NewsFeedDriver {
             feedServices.downvotePost(2);
 
             feedServices.commentOnPost(2, "LOL!");
+
+            userServices.loginUser("Lucious");
+            feedServices.replyOnComments(2, "Not funny to be honest :)");
+
+            userServices.loginUser("Tom");
+            feedServices.replyOnComments(3, "Nested Comment !!");
             feedServices.showNewsFeed();
         }
         catch (Exception e){

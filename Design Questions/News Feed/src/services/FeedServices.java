@@ -59,4 +59,16 @@ public class FeedServices {
 
         userDao.showNewsFeed();
     }
+
+
+    // Bonus Task
+    public void replyOnComments(Integer commentId, String replyMessage) throws Exception{
+
+        if(commentId <= 0 || commentId == null)
+            throw new Exception("CommentId should be non-zero positive number");
+        else if(replyMessage.isEmpty() || replyMessage == null)
+            throw new Exception("Comment reply message can not be empty");
+
+        userDao.replyOnComments(commentId, replyMessage);
+    }
 }

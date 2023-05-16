@@ -7,6 +7,7 @@ import models.Post;
 import models.User;
 import services.UserServices;
 import utils.IDGenerator;
+import utils.Utils;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -106,7 +107,7 @@ public class UserDao {
         Post newPost = new Post();
         newPost.setPostId(IDGenerator.generateId(IDType.POST));
         newPost.setPostMessage(postMessage);
-        newPost.setPostTimestamp(Timestamp.from(Instant.now()));
+        newPost.setPostTimestamp(new Date());
         newPost.setPostUpVotes(0);
         newPost.setPostDownVotes(0);
         newPost.setPostByUserId(loggedInUser.getUserId());
@@ -133,11 +134,7 @@ public class UserDao {
 
 
         // If logged-in user exist
-        Comment newComment = new Comment();
-        newComment.setCommentId(IDGenerator.generateId(IDType.COMMENT));
-        newComment.setCommentTimestamp(Timestamp.from(Instant.now()));
-        newComment.setCommentMessage(commentMessage);
-        newComment.setCommentByUserId(loggedInUser.getUserId());
+        Comment newComment = createCommentObject(commentMessage);
 
         commentInfoMap.put(newComment.getCommentId(), newComment);
         postInfoMap.get(postId).getPostCommentsList().add(newComment.getCommentId());
@@ -208,7 +205,32 @@ public class UserDao {
                 // If both users are in following list
                 if((a && b) || (!a && !b)){
 
-                    return 0;
+                    // Order by score
+                    if(p1.getPostUpVotes() - p1.getPostDownVotes() > p2.getPostUpVotes() - p2.getPostDownVotes()){
+
+                        return -1;
+                    }
+                    else if(p1.getPostUpVotes() - p1.getPostDownVotes() < p2.getPostUpVotes() - p2.getPostDownVotes()){
+
+                        return 1;
+                    }
+                    else{
+
+                        // Order by number of comments
+                        if(p1.getPostCommentsList().size() > p2.getPostCommentsList().size()){
+
+                            return 1;
+                        }
+                        else if(p1.getPostCommentsList().size() < p2.getPostCommentsList().size()){
+
+                            return -1;
+                        }
+                        else{
+
+                            // Order by timestamp
+                            return p2.getPostTimestamp().compareTo(p1.getPostTimestamp());
+                        }
+                    }
                 }
                 // If user one is in following list
                 else if(a){
@@ -230,13 +252,36 @@ public class UserDao {
             System.out.println("(" + post.getPostUpVotes() + " upvotes, " + post.getPostDownVotes() + " downvotes" + ")");
             System.out.println(userInfoMap.get(post.getPostByUserId()).getUserName());
             System.out.println(post.getPostMessage());
-            System.out.println(post.getPostTimestamp());
+            System.out.println(Utils.formatTimestamp(post.getPostTimestamp()));
 
             // Get comments related to this post
             getPostComments(post.getPostCommentsList(), 1);
             System.out.println();
         }
     }
+    
+    
+    // Bonus Task
+    public void replyOnComments(Integer commentId, String replyMessage) throws Exception{
+
+        // If no logged-in user exist
+        if(loggedInUser == null)
+            throw new Exception("No user logged-in currently ");
+        
+        // If commentId do not exist
+        if(!commentInfoMap.containsKey(commentId))
+            throw new Exception("Comment do not exist with commentId " + commentId);
+
+        
+        // If comment exist
+        Comment newComment = createCommentObject(replyMessage);
+        
+        commentInfoMap.put(newComment.getCommentId(), newComment);
+        commentInfoMap.get(commentId).getCommentsReplyList().add(newComment.getCommentId());
+
+        System.out.println(loggedInUser.getUserName() + " has replied on commentId " + commentId);
+    }
+    
 
     // Helper Functions
     public List<Integer> fetchPostList(){
@@ -251,6 +296,20 @@ public class UserDao {
         return postList;
     }
 
+    public Comment createCommentObject(String commentMessage){
+
+        Comment newComment = new Comment();
+        newComment.setCommentId(IDGenerator.generateId(IDType.COMMENT));
+        newComment.setCommentTimestamp(new Date());
+        newComment.setCommentMessage(commentMessage);
+        newComment.setCommentUpVotes(0);
+        newComment.setCommentDownVotes(0);
+        newComment.setCommentByUserId(loggedInUser.getUserId());
+        newComment.setCommentsReplyList(new ArrayList<>());
+
+        return newComment;
+    }
+
     public void getPostComments(List<Integer> commentsList, int level){
 
         if(commentsList.size() == 0)
@@ -260,7 +319,7 @@ public class UserDao {
         String tabSpace = "";
 
         for(int i=1; i<=level; i++)
-            tabSpace += "\t";
+            tabSpace += "\t\t";
 
 
         for(Integer commentId : commentsList){
@@ -268,9 +327,11 @@ public class UserDao {
             Comment comment = commentInfoMap.get(commentId);
 
             System.out.println(tabSpace + "Comment Id : " + comment.getCommentId());
+            System.out.println(tabSpace + "(" + comment.getCommentUpVotes() + " upvotes, " + comment.getCommentDownVotes() + " downvotes" + ")");
             System.out.println(tabSpace + userInfoMap.get(comment.getCommentByUserId()).getUserName());
             System.out.println(tabSpace + comment.getCommentMessage());
-            System.out.println(tabSpace + comment.getCommentTimestamp());
+            System.out.println(tabSpace + Utils.formatTimestamp(comment.getCommentTimestamp()));
+            getPostComments(comment.getCommentsReplyList(), level+1);
         }
     }
 }

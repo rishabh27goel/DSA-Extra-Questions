@@ -1,6 +1,7 @@
 package models;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class Post {
@@ -10,7 +11,7 @@ public class Post {
     private String postMessage;
     private Integer postUpVotes;
     private Integer postDownVotes;
-    private Timestamp postTimestamp;
+    private Date postTimestamp;
     private List<Integer> postCommentsList;
 
     public Post(){
@@ -58,11 +59,11 @@ public class Post {
         this.postDownVotes = postDownVotes;
     }
 
-    public Timestamp getPostTimestamp() {
+    public Date getPostTimestamp() {
         return postTimestamp;
     }
 
-    public void setPostTimestamp(Timestamp postTimestamp) {
+    public void setPostTimestamp(Date postTimestamp) {
         this.postTimestamp = postTimestamp;
     }
 
