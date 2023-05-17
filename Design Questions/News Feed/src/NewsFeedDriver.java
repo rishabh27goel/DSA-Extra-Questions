@@ -7,6 +7,7 @@ public class NewsFeedDriver {
 
         try {
             UserServices userServices = UserServices.getInstance();
+
             FeedServices feedServices = FeedServices.getInstance();
             System.out.println("Services Created");
 
@@ -39,6 +40,8 @@ public class NewsFeedDriver {
             feedServices.replyOnComments(2, "Not funny to be honest :)");
 
             userServices.loginUser("Tom");
+            feedServices.replyOnComments(3, "Nested Comment !!");
+            feedServices.replyOnComments(2, "Nested Comment !!");
             feedServices.replyOnComments(3, "Nested Comment !!");
             feedServices.showNewsFeed();
         }
