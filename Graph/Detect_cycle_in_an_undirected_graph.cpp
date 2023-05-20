@@ -5,37 +5,94 @@ using namespace std;
 
 // Method 1 : Breadth First Search
 // Time : O(V + E)   Space : O(V + E)
-bool detect(int n, vector< vector<int> > &adjList, vector<bool> &visited, int src){
+// bool detect(int n, vector< vector<int> > &adjList, vector<bool> &visited, int src){
 
-    queue< pair<int, int> > q;
+//     queue< pair<int, int> > q;
 
-    q.push(make_pair(src, -1));
-    visited[src] = true;
+//     q.push(make_pair(src, -1));
+//     visited[src] = true;
 
-    while(!q.empty()){
+//     while(!q.empty()){
 
-        int size = q.size();
+//         int size = q.size();
 
-        while(size--){
+//         while(size--){
 
-            int node = q.front().first;
-            int parent = q.front().second;
-            q.pop();
+//             int node = q.front().first;
+//             int parent = q.front().second;
+//             q.pop();
 
 
-            for(int child : adjList[node]){
+//             for(int child : adjList[node]){
 
-                if(!visited[child]){
+//                 if(!visited[child]){
 
-                    q.push(make_pair(child, node));
-                    visited[child] = true;
-                }
-                else{
+//                     q.push(make_pair(child, node));
+//                     visited[child] = true;
+//                 }
+//                 else{
 
-                    if(child != parent)
-                        return true;
-                }
+//                     if(child != parent)
+//                         return true;
+//                 }
+//             }
+//         }
+//     }
+
+//     return false;
+// }
+
+// bool detectCycles(int n, vector< pair<int, int> > &edges){
+
+//     vector< vector<int> > adjList(n);
+
+//     for(int i=0; i<edges.size(); i++){
+
+//         int u = edges[i].first;
+//         int v = edges[i].second;
+
+//         adjList[u].push_back(v);
+//         adjList[v].push_back(u);
+//     }
+
+//     vector<bool> visited(n, false);
+
+//     for(int i=0; i<n; i++){
+
+//         if(visited[i] == false){
+
+//             // If cycle exist
+//             if(detect(n, adjList, visited, i)){
+
+//                 return true;
+//             }
+//         }
+//     }
+
+//     return false;
+// }
+
+// Method 2 :  First Search
+// Time : O(V + E)   Space : O(V + E)
+bool dfs(int n, vector< vector<int> > &adjList, vector<bool> &visited, int start, int parent){
+
+    visited[start] = true;
+
+    for(int i=0; i<adjList[start].size(); i++){
+
+        // If neighbour is not visited
+        if(visited[adjList[start][i]] == false){
+
+            // If cycle exist on below path
+            if(dfs(n, adjList, visited, adjList[start][i], start)){
+
+                return true;
             }
+        }
+        else{
+
+            if(parent != adjList[start][i])
+                return true;
         }
     }
 
@@ -62,7 +119,7 @@ bool detectCycles(int n, vector< pair<int, int> > &edges){
         if(visited[i] == false){
 
             // If cycle exist
-            if(detect(n, adjList, visited, i)){
+            if(dfs(n, adjList, visited, i, -1)){
 
                 return true;
             }
