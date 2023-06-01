@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 // Brute Force
@@ -27,24 +28,24 @@ using namespace std;
 // } 
 
 // Using Map
-// Time : O(n)  Space : O(1)
+// Time : O(n)  Space : O(n)
 int findSubarraysWithXor(vector<int> &arr, int target){
 
     int n = arr.size();
 
     int total = 0;
 
+    unordered_map<int, int> mp;
+    mp[0] = 1;
+
+    int xorNum = 0;
+
     for(int i=0; i<n; i++){
 
-        int xorNum = 0;
+        xorNum ^= arr[i];
 
-        for(int j=i; j<n; j++){
-
-            xorNum ^= arr[j];
-
-            if(target == xorNum)
-                total++;
-        }
+        total += mp[xorNum ^ target];
+        mp[xorNum]++;
     }
 
     return total;
