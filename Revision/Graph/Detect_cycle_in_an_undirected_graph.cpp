@@ -72,7 +72,7 @@ using namespace std;
 //     return false;
 // }
 
-// Method 2 :  First Search
+// Method 2 : Depth First Search
 // Time : O(V + E)   Space : O(V + E)
 bool dfs(int n, vector< vector<int> > &adjList, vector<bool> &visited, int start, int parent){
 
