@@ -31,29 +31,29 @@ using namespace std;
 
 // Another Method
 // Time : O(n * n)  Space : O(n * n)
-// vector< vector<ll> > printPascal(int n) {
+vector< vector<ll> > printPascal(int n) {
 
-//     vector< vector<ll> > result;
+    vector< vector<ll> > result;
 
-//     for(int i=0; i<n; i++){
+    for(int i=1; i<=n; i++){
 
-//         vector<ll> level;
+        vector<ll> level;
 
-//         level.push_back(1);
+        ll c = 1;
 
-//         for(int j=1; j<i; j++){
+        for(int j=1; j<=i; j++){
 
-//             level.push_back(result[i-1][j-1] + result[i-1][j]);
-//         }   
+            level.push_back(c);
 
-//         if(i > 0)
-//             level.push_back(1);
+            c *= (i - j);
+            c /= j;
+        }
 
-//         result.push_back(level);
-//     }
+        result.push_back(level);
+    }
 
-//     return result;
-// }
+    return result;
+}
 
 int main()
 {
