@@ -30,21 +30,35 @@ void addNode(Node* &head, Node* &tail, Node* &itr){
 
 // Linear Method 
 // Time : O(n)  Space : O(1)
-Node* findMiddle(Node* head) {
+Node *rotate(Node *head, int k) {
+     
+    int n = 1;
+
+    Node* itr = head;
+
+    while (itr->next != NULL) {
     
-    if(head->next == NULL)
-        return head;
-
-    Node* fast = head;
-    Node* middle = head;
-
-    while(fast != NULL && fast->next != NULL){
-
-        middle = middle->next;
-        fast = fast->next->next;
+        n++;
+        itr = itr->next;
     }
 
-    return middle;
+    k = (k % n);
+    k = n - k;
+
+    itr->next = head;
+
+    Node* prev = NULL;
+    itr = head;
+
+    while (k--) {
+    
+        prev = itr;
+        itr = itr->next;
+    }
+
+    prev->next = NULL;
+
+    return itr;
 }
 
 int main()
@@ -68,10 +82,23 @@ int main()
         addNode(head, tail, node);
     }
 
-    
-    Node* middle = findMiddle(head);
+    cout << "Enter k : ";
+    int k;
+    cin >> k;
 
-    cout << "Middle Node : " << middle->data;
+
+    Node* itr = rotate(head, k);
+
+    cout << "Updated List : ";
+
+    while (itr != NULL) {
+
+        cout << itr->data << " ";
+
+        itr = itr->next;
+    }
+    
+
 
 
     cout << endl;
