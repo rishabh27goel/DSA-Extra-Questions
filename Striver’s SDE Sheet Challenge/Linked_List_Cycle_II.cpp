@@ -13,6 +13,8 @@ class Node
     }
 };
 
+
+// Time : O(n)  Space : O(1)
 Node *firstNode(Node *head)
 {
     Node* slow = head;
