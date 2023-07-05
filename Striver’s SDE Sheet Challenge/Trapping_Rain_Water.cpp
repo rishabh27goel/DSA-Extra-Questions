@@ -80,6 +80,7 @@ int main()
     cout << "Water Trapped : " << water;
 
 
+
     cout << endl;
     return 0;
 }
