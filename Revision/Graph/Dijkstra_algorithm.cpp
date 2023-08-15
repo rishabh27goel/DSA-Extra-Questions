@@ -110,6 +110,8 @@ int main()
 
         int u, v, w;
         cin >> u >> v >> w;
+
+        edges.push_back({u, v, w});
     }
 
     cout << "Enter source node : ";
