@@ -2,7 +2,9 @@
 #include <vector>
 using namespace std;
 
-// Time : O(n^2)  Space : O(1)
+// Best Time : O(n^2)  Space : O(1)
+// Average Time : O(n^2)  Space : O(1)
+// Worst Time : O(n^2)  Space : O(1)
 // void bubbleSort(vector<int> &arr){
 
 //     int n = arr.size();
@@ -17,6 +19,9 @@ using namespace std;
 // }
 
 // Optimise bubble sort 
+// Best Time : O(n)  Space : O(1)
+// Average Time : O(n^2)  Space : O(1)
+// Worst Time : O(n^2)  Space : O(1)
 // If no swap was there it means the array was already sorted
 void bubbleSort(vector<int> &arr){
 
