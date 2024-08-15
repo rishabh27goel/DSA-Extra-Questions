@@ -47,7 +47,6 @@ void getLeftNodes(TreeNode* node, stack<TreeNode*> &st) {
     }
 }
 
-
 void printInorder(TreeNode* root) {
     if(root == NULL)  return;
 
