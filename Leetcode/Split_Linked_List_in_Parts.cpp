@@ -14,66 +14,42 @@ struct ListNode {
 
 class Solution {
 public:
-
-    void addNode(ListNode* &head, ListNode* &tail, ListNode* &itr){
-
-        if(head == NULL){
-
-            head = itr;
-        }
-        else{
-
-            tail->next = itr;
-        }
-
-        tail = itr;
-    }
-
     vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        ios_base::sync_with_stdio(false);
+        // cin.tie(NULL);
+        // cout.tie(NULL);
 
         ListNode* itr = head;
-        int length = 0;
-   
-        while(itr != NULL){
-
-            length++;
+        int listSize = 0;
+        
+        while(itr != NULL) {
+            listSize++;
             itr = itr->next;
         }
 
-        int fixLen = length / k;
-        int remLen = length % k;
-
-        
-        vector<ListNode*> result;
+        vector<ListNode*> parts(k);
         itr = head;
 
-        while(k--){
+        int fixed = listSize / k;
+        int extra = listSize % k;
+        int j = 0;
 
-            ListNode* newHead = NULL;
-            ListNode* newTail = NULL;
+        while(itr != NULL) {
+            int window = fixed + (extra-- > 0);
 
-            int c = fixLen;
+            ListNode* start = itr;
+            ListNode* prevNode = NULL;
 
-            while(itr != NULL && c--){
-
-                addNode(newHead, newTail, itr);
+            while(window--) {
+                prevNode = itr;
                 itr = itr->next;
             }
 
-            // Extra node
-            if(itr != NULL && remLen > 0){
-
-                addNode(newHead, newTail, itr);
-                itr = itr->next;
-                remLen--;
-            }
-
-            if(newTail != NULL)
-                newTail->next = NULL;
-
-            result.push_back(newHead);
+            prevNode->next = NULL;
+            parts[j] = start;
+            j++;
         }
 
-        return result;
+        return parts;
     }
 };
