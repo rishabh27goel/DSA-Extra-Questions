@@ -5,12 +5,10 @@ using namespace std;
 
 class Solution {
 public:
-
-    // Method 1 :
+    // unordered_set<string> words;
     // int dp[51];
 
-    // int findMinChars(int n, string &str, unordered_set<string> &words, int idx){
-
+    // int findMinChars(int n, string &str, int idx) {
     //     // Base Case
     //     if(idx == n)
     //         return 0;
@@ -18,54 +16,39 @@ public:
     //     if(dp[idx] != -1)
     //         return dp[idx];
 
+    //     string prefix = "";
+    //     int minChars = n;
 
-    //     int include = INT_MAX;
-    //     string subStr = "";
+    //     for(int j = idx; j < n; j++) {
+    //         prefix.push_back(str[j]);
 
-    //     for(int j=idx; j<n; j++){
-
-    //         subStr.push_back(str[j]);
-
-    //         if(words.find(subStr) != words.end()){
-
-    //             int call = findMinChars(n, str, words, j+1);
-
-    //             include = min(include, call);
+    //         if(words.find(prefix) != words.end()) {
+    //             int include = findMinChars(n, str, j + 1);
+    //             minChars = min(minChars, include);
     //         }
     //     }
 
-    //     int exclude = 1 + findMinChars(n, str, words, idx+1);
-
-
-    //     return dp[idx] = min(include, exclude);
+    //     int exclude = 1 + findMinChars(n, str, idx + 1);
+        
+    //     return dp[idx] = min(minChars, exclude);
     // }
 
     // int minExtraChar(string str, vector<string>& dictionary) {
-        
     //     ios_base::sync_with_stdio(false);
-    //     cin.tie(NULL);
+    //     // cin.tie(NULL);
     //     cout.tie(NULL);
 
     //     int n = str.size();
 
-    //     memset(dp, -1, sizeof(dp));
-
-    //     unordered_set<string> words;
-
-    //     for(int i=0; i<dictionary.size(); i++){
-
-    //         words.insert(dictionary[i]);
+    //     for(int j = 0; j < dictionary.size(); j++) {
+    //         words.insert(dictionary[j]);
     //     }
 
-    //     return findMinChars(n, str, words, 0);
+    //     memset(dp, -1, sizeof(dp));
+    //     return findMinChars(n, str, 0);
     // }
 
-
-    // Method 2 :
-    int dp[52];
-
     int minExtraChar(string str, vector<string>& dictionary) {
-        
         ios_base::sync_with_stdio(false);
         cin.tie(NULL);
         cout.tie(NULL);
@@ -73,39 +56,30 @@ public:
         int n = str.size();
 
         unordered_set<string> words;
-
-        for(int i=0; i<dictionary.size(); i++){
-
-            words.insert(dictionary[i]);
-        }
-
-
+        int dp[51];
         memset(dp, 0, sizeof(dp));
 
-        for(int idx=n-1; idx>=0; idx--){
+        for(int j = 0; j < dictionary.size(); j++) {
+            words.insert(dictionary[j]);
+        }
 
-            int include = INT_MAX;
-            string subStr = "";
+        for(int idx = n-1; idx >= 0; idx--) {
+            string prefix = "";
+            int minChars = n;
 
-            for(int j=idx; j<n; j++){
+            for(int j = idx; j < n; j++) {
+                prefix.push_back(str[j]);
 
-                subStr.push_back(str[j]);
-
-                if(words.find(subStr) != words.end()){
-
-                    int call = dp[j+1];
-
-                    include = min(include, call);
+                if(words.find(prefix) != words.end()) {
+                    int include = dp[j+1];
+                    minChars = min(minChars, include);
                 }
             }
 
             int exclude = 1 + dp[idx+1];
-
-
-            dp[idx] = min(include, exclude);
+            dp[idx] = min(minChars, exclude);
         }
-
-
+        
         return dp[0];
     }
 };
