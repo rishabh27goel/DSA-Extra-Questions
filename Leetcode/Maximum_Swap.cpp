@@ -5,19 +5,15 @@ using namespace std;
 // Method 1 : Checking for each digit 
 // Time Complexity : O(n ^ 2)  Space Complexity : O(n)
 // int maximumSwap(int n){
-
 //     string strNum = to_string(n);
 
 //     for(int i=0; i<strNum.size(); i++){
-
 //         int dig = strNum[i]-'0';
 //         int index = -1;
 
 //         // If a greater element exists
 //         for(int j=i+1; j<strNum.size(); j++){
-
 //             if(strNum[i] != strNum[j]){
-
 //                 if(dig <= (strNum[j]-'0')){
 
 //                     dig =  strNum[j]-'0';
@@ -27,7 +23,6 @@ using namespace std;
 //         }
 
 //         if(index != -1){
-
 //             swap(strNum[index], strNum[i]);
 //             break;
 //         }
@@ -39,7 +34,6 @@ using namespace std;
 // Method 2 : Single Iteration [Linear Method] 
 // Time Complexity : O(n)  Space Complexity : O(n)
 int maximumSwap(int n){
-
     string strNum = to_string(n);
 
     int leftInd = -1;
@@ -52,12 +46,10 @@ int maximumSwap(int n){
 
         // If current is the max number
         if(strNum[i]-'0' > maxNum){
-
             maxNum = strNum[i]-'0';
             maxInd = i;
         }
         else{
-
             if(maxNum > strNum[i]-'0'){
 
                 leftInd = i;
@@ -84,7 +76,6 @@ int main()
     int result = maximumSwap(n);
 
     cout << "Maximum is : " << result;    
-
 
     cout << endl;
     return 0;
