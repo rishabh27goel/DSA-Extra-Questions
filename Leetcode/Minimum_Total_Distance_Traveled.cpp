@@ -81,10 +81,94 @@ public:
     //     return findDistance(n, fact.size(), robot, fact, 0, 0);
     // }
 
+    // long long minimumTotalDistance(vector<int>& robot, vector<vector<int>>& factory) {
+    //     ios_base::sync_with_stdio(false);
+    //     cin.tie(NULL);
+    //     cout.tie(NULL);
+
+    //     int n = robot.size();
+
+    //     sort(robot.begin(), robot.end());
+    //     sort(factory.begin(), factory.end());
+
+    //     vector<int> fact;
+    //     for(auto &child : factory) {
+    //         for(int j = 0; j < child[1]; j++) {
+    //             fact.push_back(child[0]);
+    //         }
+    //     }
+
+    //     int m = fact.size();
+    //     vector<vector<long>> dp(n + 1, vector<long> (m + 1, 0));
+
+    //     for(int rbIdx = n-1; rbIdx >= 0; rbIdx--) {
+    //         for(int fcIdx = m; fcIdx >= 0; fcIdx--) {
+    //             if(fcIdx == m) {
+    //                 dp[rbIdx][fcIdx] = LONG_MAX; 
+    //                 continue;
+    //             }
+                    
+    //             long nextFactory = dp[rbIdx][fcIdx + 1];
+
+    //             long includeRobot = dp[rbIdx + 1][fcIdx + 1];
+    //             if(includeRobot != LONG_MAX)
+    //                 includeRobot = abs(robot[rbIdx] - fact[fcIdx]) + includeRobot;
+
+    //             dp[rbIdx][fcIdx] = min(nextFactory, includeRobot);
+    //         }
+    //     }
+
+    //     return dp[0][0];
+    // }
+
+    // long long minimumTotalDistance(vector<int>& robot, vector<vector<int>>& factory) {
+    //     ios_base::sync_with_stdio(false);
+    //     cin.tie(NULL);
+    //     cout.tie(NULL);
+
+    //     int n = robot.size();
+
+    //     sort(robot.begin(), robot.end());
+    //     sort(factory.begin(), factory.end());
+
+    //     vector<int> fact;
+    //     for(auto &child : factory) {
+    //         for(int j = 0; j < child[1]; j++) {
+    //             fact.push_back(child[0]);
+    //         }
+    //     }
+
+    //     int m = fact.size();
+
+    //     vector<long> prev(m + 1, 0);
+    //     vector<long> curr(m + 1, 0);
+
+    //     for(int rbIdx = n-1; rbIdx >= 0; rbIdx--) {
+    //         for(int fcIdx = m; fcIdx >= 0; fcIdx--) {
+    //             if(fcIdx == m) {
+    //                 curr[fcIdx] = LONG_MAX; 
+    //                 continue;
+    //             }
+                    
+    //             long nextFactory = curr[fcIdx + 1];
+
+    //             long includeRobot = prev[fcIdx + 1];
+    //             if(includeRobot != LONG_MAX)
+    //                 includeRobot = abs(robot[rbIdx] - fact[fcIdx]) + includeRobot;
+
+    //             curr[fcIdx] = min(nextFactory, includeRobot);
+    //         }
+
+    //         prev = curr;
+    //     }
+
+    //     return prev[0];
+    // }
+
     long long minimumTotalDistance(vector<int>& robot, vector<vector<int>>& factory) {
         ios_base::sync_with_stdio(false);
         cin.tie(NULL);
-        cout.tie(NULL);
+        // cout.tie(NULL);
 
         int n = robot.size();
 
@@ -99,25 +183,28 @@ public:
         }
 
         int m = fact.size();
-        vector<vector<long>> dp(n + 1, vector<long> (m + 1, 0));
+        
+        vector<long> prev(n + 1, 0);
+        vector<long> curr(n + 1, 0);
 
-        for(int rbIdx = n-1; rbIdx >= 0; rbIdx--) {
-            for(int fcIdx = m; fcIdx >= 0; fcIdx--) {
+        for(int fcIdx = m; fcIdx >= 0; fcIdx--) {
+            for(int rbIdx = n-1; rbIdx >= 0; rbIdx--) {
                 if(fcIdx == m) {
-                    dp[rbIdx][fcIdx] = LONG_MAX; 
+                    curr[rbIdx] = LONG_MAX; 
                     continue;
                 }
                     
-                long nextFactory = dp[rbIdx][fcIdx + 1];
+                long nextFactory = prev[rbIdx];
 
-                long includeRobot = dp[rbIdx + 1][fcIdx + 1];
+                long includeRobot = prev[rbIdx + 1];
                 if(includeRobot != LONG_MAX)
                     includeRobot = abs(robot[rbIdx] - fact[fcIdx]) + includeRobot;
 
-                dp[rbIdx][fcIdx] = min(nextFactory, includeRobot);
+                curr[rbIdx] = min(nextFactory, includeRobot);
             }
+            prev = curr;
         }
 
-        return dp[0][0];
+        return prev[0];
     }
 };
