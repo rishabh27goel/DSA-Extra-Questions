@@ -2,62 +2,69 @@
 #include <vector>
 using namespace std;
 
-// Method : Using Sliding Window
-// Time Complexity : O(n)  Space Complexity : O(1)
-// Questions : To find min minutes from left and right sides
-// Solution : To find max middle subarray [Reverse Thinking]
-int eachCharacter(string &str, int k){
+class Solution {
+public:
+    // Brute Force
+    // int result = INT_MAX;
+    // void findCharTake(int n, string &str, int k, vector<int> &charCount, int left, int right, int operations) {
+    //     if(charCount[0] >= k && charCount[1] >= k && charCount[2] >= k)
+    //         result = min(result, operations);
+        
+    //     if(left > right)         
+    //         return;
 
-    int n = str.size();
+    //     // Take from left
+    //     charCount[str[left]-'a']++;
+    //     findCharTake(n, str, k, charCount, left + 1, right, operations + 1);
+    //     charCount[str[left]-'a']--;
 
-    int charCount[3] = {0};
+    //     // Take from right
+    //     charCount[str[right]-'a']++;
+    //     findCharTake(n, str, k, charCount, left, right - 1, operations + 1);
+    //     charCount[str[right]-'a']--;
+    // }
 
-    for(int i=0; i<n; i++){
+    // int takeCharacters(string str, int k) {
+    //     int n = str.size();
 
-        charCount[str[i]-'a']++;
-    }
+    //     vector<int> charCount(3, 0);
+    //     findCharTake(n, str, k, charCount, 0, n-1, 0);
 
-    if(charCount[0] < k || charCount[1] < k || charCount[2] < k)
-        return -1;
+    //     return result == INT_MAX ? -1 : result;
+    // }
 
-    int minMinute = INT_MAX;
-    int start = 0;
-    int window = 0;
+    // Target : Minimum subarray having count of all chars >= k (a >= k && b >= k && c >= k)
+    // Alternative: Maximum window having (a < k || b < k || c < k)
+    int takeCharacters(string str, int k) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        // cout.tie(NULL);
 
-    for(int i=0; i<n; i++){
+        int n = str.size();
 
-        charCount[str[i]-'a']--;
-        window++;
+        int charCount[3] = {0};
+        for(int j = 0; j < n; j++) 
+            charCount[str[j]-'a']++;
 
-        while(charCount[str[i]-'a'] < k){
+        if(charCount[0] < k || charCount[1] < k || charCount[2] < k)
+            return -1;
 
-            charCount[str[start]-'a']++;
-            start++;
-            window--;
+        int windowSize = n;
+        int start = 0;
+        int end = 0;
+
+        while(end < n) {
+            charCount[str[end]-'a']--;
+
+            while(start <= end && (charCount[0] < k || charCount[1] < k || charCount[2] < k)) {
+                charCount[str[start]-'a']++;
+                start++;
+            }
+
+            windowSize = min(windowSize, n - (end - start + 1));
+            end++;
         }
 
-        minMinute = min(minMinute, n - window);
+        return windowSize;        
     }
-
-    return minMinute;
-}
-
-int main()
-{
-    cout << "Enter Input : ";
-    string str;
-    cin >> str;
-
-    cout << "Enter k : ";
-    int k;
-    cin >> k;
-
-    // Take K of Each Character From Left and Right
-    int length = eachCharacter(str, k);
-
-    cout << "Minimum Minutes : " << length;
-
-
-    cout << endl;
-    return 0;
-}
+};
