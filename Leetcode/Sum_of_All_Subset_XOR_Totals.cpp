@@ -5,29 +5,25 @@ using namespace std;
 class Solution {
 public:
     // int subsetXORSum(vector<int>& nums) {
-        
     //     ios_base::sync_with_stdio(false);
     //     cin.tie(NULL);
     //     cout.tie(NULL);
 
-    //     int n = nums.size();
+    //     int size = nums.size();
 
-    //     int result = 0;
-    //     int p = pow(2, n);
+    //     int power = pow(2, size);
+    //     int totalSum = 0;
 
-    //     for(int i=0; i<p; i++){
-
-    //         int total = 0;
-
-    //         for(int j=0; j<n; j++){
-    //             if((i & (1 << j)))  
-    //                 total ^= nums[j];
+    //     for(int mask = 0; mask < power; mask++) {
+    //         int currXor = 0;
+    //         for(int bit = 0; bit < size; bit++) {
+    //             if(mask & (1 << bit))
+    //                 currXor ^= nums[bit];
     //         }
-
-    //         result += total;
+    //         totalSum += currXor;
     //     }
 
-    //     return result;
+    //     return totalSum;
     // }
 
     int subsetXORSum(vector<int>& nums) {
