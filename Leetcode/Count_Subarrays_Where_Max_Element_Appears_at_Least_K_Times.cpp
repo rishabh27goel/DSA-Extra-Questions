@@ -1,43 +1,67 @@
-#include <iostream>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 class Solution {
-public:
-    long long countSubarrays(vector<int>& nums, int k) {
+    public:
+        // long long countSubarrays(vector<int>& nums, int k) {
+        //     ios_base::sync_with_stdio(false);
+        //     cin.tie(NULL);
+        //     // cout.tie(NULL);
+    
+        //     long long size = nums.size();
+    
+        //     int maxNum = 0;
+        //     for(int currIdx = 0; currIdx < size; currIdx++)
+        //         maxNum = max(maxNum, nums[currIdx]);
         
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        cout.tie(NULL);
-
-        int n = nums.size();
-
-        int maxNum = 0;
-        
-        for(int i=0; i<n; i++){    
-            maxNum = max(maxNum, nums[i]);
-        }
-
-        long long total = 0;
-        int c = 0;
-
-        int i = 0;
-        int j = 0;
-
-        while(j < n){
-
-            c += (maxNum == nums[j]);
-
-            while(i <= j && c > k-1){
-                c -= (maxNum == nums[i]);
-                i++;
+        //     long long totalSubs = 0;
+        //     int maxCount = 0;
+    
+        //     int leftIdx = 0;
+        //     int currIdx = 0;
+    
+        //     while(currIdx < size) {
+        //         maxCount += (maxNum == nums[currIdx]);
+        //         while(leftIdx <= currIdx && maxCount >= k) {
+        //             maxCount -= (maxNum == nums[leftIdx]);
+        //             leftIdx++;
+        //         }
+        //         totalSubs += (currIdx - leftIdx + 1);
+        //         currIdx++;
+        //     }
+    
+        //     return (size * (size + 1)) / 2 - totalSubs;
+        // }
+    
+        long long countSubarrays(vector<int>& nums, int k) {
+            ios_base::sync_with_stdio(false);
+            cin.tie(NULL);
+            cout.tie(NULL);
+    
+            int size = nums.size();
+    
+            int maxNum = 0;
+            for(int currIdx = 0; currIdx < size; currIdx++)
+                maxNum = max(maxNum, nums[currIdx]);
+    
+    
+            long long totalSubs = 0;
+            int maxCount = 0;
+    
+            int leftIdx = 0;
+            int currIdx = 0;
+    
+            while(currIdx < size) {
+                maxCount += (maxNum == nums[currIdx]);
+                while(leftIdx <= currIdx && maxCount >= k) {
+                    maxCount -= (maxNum == nums[leftIdx]);
+                    totalSubs += (size - currIdx);
+                    leftIdx++;
+                }
+                currIdx++;
             }
-
-            total += (j - i + 1);
-            j++;
+    
+            return totalSubs;
         }
-
-        long long result = (((long long) n * (n + 1)) / 2);
-        return result - total;
-    }
-};
+    };
