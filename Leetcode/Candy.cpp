@@ -1,39 +1,28 @@
 #include <iostream>
 #include <vector>
+#include <numeric>
 using namespace std;
 
 class Solution {
-public:
-    int candy(vector<int>& ratings) {
-
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        cout.tie(NULL);
-
-        int n = ratings.size();
-
-        vector<int> candyCount(n, 1);
-
-        for(int i=0; i<n-1; i++){
-
-            if(ratings[i] < ratings[i+1]){
-
-                candyCount[i+1] = candyCount[i] + 1;
+    public:
+        int candy(vector<int>& ratings) {
+            ios_base::sync_with_stdio(false);
+            cin.tie(NULL);
+            cout.tie(NULL);
+    
+            int size = ratings.size();
+    
+            vector<int> candyCount(size, 1);
+            for(int idx = 0; idx < size - 1; idx++) {
+                if(ratings[idx] < ratings[idx + 1])
+                    candyCount[idx + 1] = candyCount[idx] + 1;
             }
-        }
-
-        int total = candyCount[n-1];
-
-        for(int i=n-2; i>=0; i--){
-
-            if(ratings[i] > ratings[i+1]){
-
-                candyCount[i] = max(candyCount[i], candyCount[i+1] + 1);
+    
+            for(int idx = size - 1; idx >= 1; idx--) {
+                if(ratings[idx - 1] > ratings[idx])
+                    candyCount[idx - 1] = max(candyCount[idx - 1], candyCount[idx] + 1);
             }
-
-            total += candyCount[i];
+    
+            return (int) accumulate(candyCount.begin(), candyCount.end(), 0);
         }
-
-        return total;
-    }
-};
+    };
