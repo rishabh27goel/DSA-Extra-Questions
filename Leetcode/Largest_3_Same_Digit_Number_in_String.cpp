@@ -2,46 +2,34 @@
 using namespace std;
 
 class Solution {
-public:
-    string largestGoodInteger(string num) {
-        
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        // cout.tie(NULL);
-
-        int n = num.size();
-
-        char ch = '/';
-        int i = 0;
-        
-        while(i < n){
-
-            int c = 0;
-            char digit = num[i];
-
-            while(i < n && digit == num[i]){
-                
-                c++;
-                i++;
-            }
-
-            if(c >= 3){
-
-                if(ch < digit){
-
-                    ch = digit;
+    public:
+        string largestGoodInteger(string num) {
+            int size = num.size();
+    
+            int largest = -1;
+            int currIdx = 0;
+    
+            while(currIdx < size) {
+                char ch = num[currIdx];
+                int count = 0;
+    
+                while(currIdx < size && ch == num[currIdx]) {
+                    count++, currIdx++;
                 }
-            }                
+    
+                if(count >= 3 && largest < ch - '0')
+                    largest = ch - '0';
+            }
+    
+            if(largest == -1)
+                return "";
+    
+            char ch = ('0' + largest);
+            
+            string str = "";
+            str.push_back(ch);
+            str.push_back(ch);
+            str.push_back(ch);
+            return str;
         }
-
-        if(ch == '/')
-            return "";
-
-        string result = "";
-        result.push_back(ch);
-        result.push_back(ch);
-        result.push_back(ch);
-
-        return result;
-    }
-};
+    };
