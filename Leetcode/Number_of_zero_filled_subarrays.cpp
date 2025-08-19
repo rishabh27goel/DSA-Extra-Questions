@@ -2,57 +2,30 @@
 #include <vector>
 using namespace std;
 
-// Method : Linear Method
-// Time Complexity : O(n)  Space Complexity : O(1)
-int numberOfSubarrays(vector<int> &arr){
-
-    int n = arr.size();
-
-    int result = 0;
-    int j = 0;
-
-    while(j < n){
-
-        if(arr[j] == 0){
-
-            int c = 0;
-
-            while(j < n && arr[j] == 0){
-
-                c++;
-                result += c;
-                j++;
+class Solution {
+    public:
+        long long zeroFilledSubarray(vector<int>& nums) {
+            ios_base::sync_with_stdio(false);
+            cin.tie(NULL);
+            cout.tie(NULL);
+    
+            int size = nums.size();
+    
+            long long totalSubs = 0;
+            int currIdx = 0;
+    
+            while(currIdx < size) {
+                if(nums[currIdx] != 0) {
+                    currIdx++;
+                }
+                else {
+                    int count = 1;
+                    while(currIdx < size && nums[currIdx] == 0) {
+                        totalSubs += count;
+                        count++, currIdx++;
+                    }
+                }
             }
+            return totalSubs;
         }
-        else{
-
-            j++;
-        }
-    }
-
-    return result;
-}
-
-int main()
-{
-    cout << "Enter size : ";
-    int size;
-    cin >> size;
-
-    vector<int> arr(size);
-
-    for(int i=0; i<size; i++){
-
-        cin >> arr[i];
-    }
-
-
-    // Number of Zero-Filled Subarrays
-    int count = numberOfSubarrays(arr);
-
-    cout << "Subarray Count : " << count;
-
-
-    cout << endl;
-    return 0;
-}
+    };
