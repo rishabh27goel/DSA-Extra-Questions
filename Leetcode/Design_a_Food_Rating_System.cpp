@@ -1,47 +1,60 @@
 #include <iostream>
-#include <unordered_map>
-#include <set>
+#include <vector>
 using namespace std;
 
 class FoodRatings {
-public:
-
-    unordered_map<string, pair<int, string>> foodMap;
-    unordered_map<string, set<pair<int, string>>> cuMap;
-
-    FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
-        
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        // cout.tie(NULL);
-
-        for(int i=0; i<foods.size(); i++){
-
-            foodMap[foods[i]] = {-ratings[i], cuisines[i]};
-            cuMap[cuisines[i]].insert(make_pair(-ratings[i], foods[i]));
+    private:
+            struct compareFood {
+                bool operator()(const pair<int, string> &p1, const pair<int, string> &p2) const {
+                    if (p1.first == p2.first)
+                        return p1.second < p2.second;
+    
+                    return p1.first > p2.first;
+                }
+            };
+    
+            unordered_map<string, set<pair<int, string>, compareFood>> cuisineToFoodListMap;
+            unordered_map<string, pair<string, int>> foodInfoMap;
+    
+    public: 
+        FoodRatings() {
+            ios_base::sync_with_stdio(false);
+            // cin.tie(NULL);
+            cout.tie(NULL);
         }
-    }
     
-    void changeRating(string food, int newRating) {
+        FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
+            int size = foods.size();
+            for(int currIdx = 0; currIdx < size; currIdx++) {
+                string &cuisine = cuisines[currIdx];
+                string &food = foods[currIdx];
+                
+                cuisineToFoodListMap[cuisine].insert(make_pair(ratings[currIdx], food));
+                foodInfoMap[food] = make_pair(cuisine, ratings[currIdx]);
+            }
+        }
         
-        auto itr = cuMap[foodMap[food].second].find({foodMap[food].first, food});
-        cuMap[foodMap[food].second].erase(itr);
-
-        foodMap[food] = make_pair(-newRating, foodMap[food].second);
-        cuMap[foodMap[food].second].insert({-newRating, food});
-    }
+        void changeRating(string food, int newRating) {
+            auto foodItr = foodInfoMap.find(food);
+            auto info = foodItr->second;
+            
+            // Remove the cuisince
+            string &cuisine = info.first;
+            cuisineToFoodListMap[cuisine].erase(make_pair(info.second, food));
     
-    string highestRated(string cuisine) {
+            // Add with new ratings
+            cuisineToFoodListMap[cuisine].insert(make_pair(newRating, food));
+            foodInfoMap[food] = make_pair(cuisine, newRating);
+        }
         
-        auto highest = *(cuMap[cuisine].begin());
-
-        return highest.second;
-    }
-};
-
-/**
- * Your FoodRatings object will be instantiated and called as such:
- * FoodRatings* obj = new FoodRatings(foods, cuisines, ratings);
- * obj->changeRating(food,newRating);
- * string param_2 = obj->highestRated(cuisine);
- */
+        string highestRated(string cuisine) {
+            return cuisineToFoodListMap[cuisine].begin()->second;
+        }
+    };
+    
+    /**
+     * Your FoodRatings object will be instantiated and called as such:
+     * FoodRatings* obj = new FoodRatings(foods, cuisines, ratings);
+     * obj->changeRating(food,newRating);
+     * string param_2 = obj->highestRated(cuisine);
+     */
