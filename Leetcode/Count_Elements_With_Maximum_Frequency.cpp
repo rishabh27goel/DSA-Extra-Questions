@@ -3,31 +3,22 @@
 using namespace std;
 
 class Solution {
-public:
-    int maxFrequencyElements(vector<int>& nums) {
-        
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        cout.tie(NULL);
-
-        int n = nums.size();
-
-        int maxFreq = 0;
-        int freq[101];
-
-        memset(freq, 0, sizeof(freq));
+    public:
+        int maxFrequencyElements(vector<int>& nums) {
+            int freq[101] = {0};
+            int totalFreq = 0;
+            int maxFreq = 0;
     
-        for(int i=0; i<n; i++){
-            maxFreq = max(maxFreq, ++freq[nums[i]]);
+            for(int idx = 0; idx < nums.size(); idx++) {
+                freq[nums[idx]]++;
+                if(maxFreq < freq[nums[idx]]) {
+                    maxFreq = freq[nums[idx]];
+                    totalFreq = maxFreq;
+                }
+                else if(maxFreq == freq[nums[idx]]) {
+                    totalFreq += maxFreq;
+                }
+            }
+            return totalFreq;
         }
-
-        int result = 0;
-
-        for(int i=0; i<n; i++){
-            if(freq[nums[i]] == maxFreq)
-                result++;
-        }
-
-        return result;
-    }
-};
+    };
